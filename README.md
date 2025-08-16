@@ -18,6 +18,7 @@ Built with **Next.js 15**, deployed on **Vercel**, and integrated with Replicate
 - View recent generations (history up to 6 items)
 - Cloud-deployed with scalable serverless functions
 - Uses a RAG layer to enrich user prompts with context (e.g., cinematic styles, historical references, or visual storytelling templates).
+- Secure API key handling — stored as environment variables in Vercel (never exposed to client-side code)
 
 
 
