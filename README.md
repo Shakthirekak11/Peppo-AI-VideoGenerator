@@ -17,7 +17,7 @@ Built with **Next.js 15**, deployed on **Vercel**, and integrated with Replicate
 - Copy video link instantly
 - View recent generations (history up to 6 items)
 - Cloud-deployed with scalable serverless functions
-- Uses a RAG layer to enrich user prompts with context (e.g., cinematic styles, historical references, or visual storytelling templates).
+- RAG-style prompt enrichment – user prompts are automatically augmented with cinematic style attributes (lighting, motion, textures) to boost quality.
 - Secure API key handling — stored as environment variables in Vercel (never exposed to client-side code)
 
 
@@ -90,6 +90,9 @@ The app is designed for **Vercel** deployment.
 
 * **Video Streaming Optimization**
   Stream video output progressively (start playing before full file downloads).
+
+* **Improvised RAG-Based Prompt Enrichment**
+  Replace lightweight RAG with a full retrieval system (vector database + semantic search) to dynamically enrich prompts with contextual knowledge or style guides.
 
 * **Advanced Controls**
 
