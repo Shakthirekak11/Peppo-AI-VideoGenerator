@@ -1,47 +1,52 @@
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
+import { enrichPrompt } from "../../lib/prompt";
 
 const token = process.env.REPLICATE_API_TOKEN ?? "";
 const rep = new Replicate({ auth: token });
 
 export const runtime = "nodejs";
 
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function poll(id: string, tries = 90, gap = 2000) {
+  for (let i = 0; i < tries; i++) {
+    const p = await rep.predictions.get(id);
+    if (p.status === "succeeded") return p.output;
+    if (p.status === "failed" || p.status === "canceled") throw new Error("prediction_failed");
+    await wait(gap);
+  }
+  throw new Error("prediction_timeout");
+}
+
 export async function POST(req: Request) {
   try {
-    if (!token) {
-      return NextResponse.json({ error: "Server not configured" }, { status: 500 });
-    }
+    if (!token) return NextResponse.json({ error: "Server not configured" }, { status: 500 });
 
     const body = await req.json();
-    const text = String(body?.prompt ?? "").trim();
+    const raw = String(body?.prompt ?? "").trim();
     const secs = Math.min(Math.max(Number(body?.duration ?? 6), 5), 10);
+    if (!raw) return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
 
-    if (!text) {
-      return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
-    }
+    const prompt = enrichPrompt(raw);
 
-    // wait: true makes Replicate return only after job finishes
     const job = await rep.predictions.create({
       model: "minimax/video-01",
-      input: { prompt: text, duration: secs },
-      wait: true
+      input: { prompt, duration: secs }
     });
 
-    let url: string | null = null;
-    const out = job.output;
+    const out = await poll(job.id);
 
+    let url: string | null = null;
     if (Array.isArray(out)) url = out.find((x) => typeof x === "string") ?? null;
     else if (typeof out === "string") url = out;
     else if (out && typeof out === "object" && "video" in (out as any)) {
-      const v = (out as any).video;
+      const v = (out as any).video as any;
       url = Array.isArray(v) ? v[0] : v || null;
     }
 
-    if (!url) {
-      return NextResponse.json({ error: "No video URL" }, { status: 502 });
-    }
-
-    return NextResponse.json({ videoUrl: url });
+    if (!url) return NextResponse.json({ error: "No video URL" }, { status: 502 });
+    return NextResponse.json({ videoUrl: url, usedPrompt: prompt });
   } catch (e: any) {
     return NextResponse.json({ error: e?.message || "Server error" }, { status: 500 });
   }
