@@ -1,34 +1,118 @@
-# 🎥 Peppo AI – Prompt to Video Generator  
+---
 
-A minimal AI-integrated web app that turns text prompts into short videos using Replicate models.  
-Built with Next.js 15, styled with Tailwind CSS, and deployed on Vercel.  
+# 🎬 Peppo AI Video Generator
 
-🔗 **Live Demo:** [Click here](https://peppo-ai-video-generator-9ns5cognp-shakthirekak11s-projects.vercel.app)  
-🔗 **GitHub Repo:** [Click here](https://github.com/Shakthirekak11/Peppo-AI-VideoGenerator)  
+An AI-powered web app that generates short videos from text prompts using [Replicate](https://replicate.com) models.  
+Built with **Next.js 15**, deployed on **Vercel**, and integrated with Replicate’s video generation API.
 
-
-## ✨ Features  
-
-- Input a text prompt (e.g., *"A golden retriever surfing at sunset"*).  
-- Generate a **5–10 second AI video** from the prompt.  
-- Watch, download, or copy link to the generated video.  
-- Keeps a recent history of generated videos (up to 6).  
-- Deployed live on **Vercel** for public access.  
+👉 **Live Demo:** [Peppo AI Video Generator](https://peppo-video-generator.vercel.app)
 
 ---
 
-## 🛠️ Tech Stack  
+## ✨ Features
+- Generate AI videos from natural language prompts
+- Choose custom duration (5–10 seconds)
+- Inline video preview with auto-play & loop
+- One-click download
+- Copy video link instantly
+- View recent generations (history up to 6 items)
+- Cloud-deployed with scalable serverless functions
+- Uses a RAG layer to enrich user prompts with context (e.g., cinematic styles, historical references, or visual storytelling templates).
 
-- **Frontend:** Next.js 15 (App Router), Tailwind CSS  
-- **Backend:** Next.js API routes (Node.js runtime)  
-- **AI Model:** Replicate – `minimax/video-01`  
-- **Deployment:** Vercel  
+
+
+## 🛠 Tech Stack
+- **Frontend:** Next.js (App Router, React, TailwindCSS)
+- **Backend:** Next.js API Routes (Node.js runtime)
+- **AI Model:** Replicate (`minimax/video-01`)
+- **Deployment:** Vercel
+
 
 ---
 
-## 🚀 Getting Started (Local Development)  
 
-1. **Clone the repository**  
+## Getting Started (Local Setup)
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Shakthirekak11/Peppo-AI-VideoGenerator.git
+cd Peppo-AI-VideoGenerator
+````
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set environment variables
+
+Create a `.env.local` file in the root directory and add your Replicate API token:
+
+```bash
+REPLICATE_API_TOKEN=your_replicate_api_key
+```
+
+> You can get a key from [Replicate Account](https://replicate.com/account).
+
+### 4. Run the app
+
+```bash
+npm run dev
+```
+
+Your app will be available at [http://localhost:3000](http://localhost:3000).
+
+
+
+## Deployment
+
+The app is designed for **Vercel** deployment.
+
+### Steps:
+
+1. Push your code to GitHub:
+
    ```bash
-   git clone https://github.com/Shakthirekak11/Peppo-AI-VideoGenerator.git
-   cd Peppo-AI-VideoGenerator
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+2. Go to [Vercel](https://vercel.com).
+3. Import the GitHub repo.
+4. Add your environment variable (`REPLICATE_API_TOKEN`) under **Settings → Environment Variables**.
+5. Deploy 
+
+---
+
+## Future Improvements
+
+* **Video Streaming Optimization**
+  Stream video output progressively (start playing before full file downloads).
+
+* **Advanced Controls**
+
+  * Adjustable resolution (e.g., 480p / 720p / 1080p)
+  * Frame rate customization
+  * Multiple aspect ratios (16:9, 9:16, 1:1)
+
+* **User Project History**
+  Persistent storage (Supabase / Firebase) so users can log in and access all their past generations.
+
+* **Creative Prompt Suggestions**
+  Auto-suggest variations of prompts using OpenAI or HuggingFace models.
+
+* **Multi-language Support**
+  Allow prompts in multiple languages and auto-translate them into English for model input.
+
+* **Billing / Usage Tracking**
+  Limit free usage and integrate Stripe for paid tiers.
+
+
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a PR.
+
+---
+
