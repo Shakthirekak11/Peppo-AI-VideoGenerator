@@ -13,7 +13,7 @@ Built with **Next.js 15**, deployed on **Vercel**, and integrated with Replicate
 - Generate AI videos from natural language prompts
 - Choose custom duration (5–10 seconds)
 - Inline video preview with auto-play & loop
-- One-click download
+- One-click download (Browser Dependent)
 - Copy video link instantly
 - View recent generations (history up to 6 items)
 - Cloud-deployed with scalable serverless functions
